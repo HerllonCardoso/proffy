@@ -4,13 +4,14 @@ import './styles.css'
 import PageHeader from '../../components/PageHeader/index'
 import Input from '../../components/Input'
 
-import TeacherItem from '../../components/TeacherItem/'
+import TeacherItem, { Teacher } from '../../components/TeacherItem/'
 import Select from '../../components/Select'
 import api from '../../services/api'
 
 
-
 function TeacherList(){
+    const [teachers, setTeachers] =useState([]);
+
     const [subject, setSubject] = useState('');
     const [week_day, setWeekDay] = useState('');
     const [time, setTime] = useState('');
@@ -18,14 +19,16 @@ function TeacherList(){
     async function searchTeachers(e: FormEvent) {
         e.preventDefault();
 
-        const response = await api.get('classes', {
+    
+
+     const response = await api.get('classes', {
             params: {
                 subject,
-            week_day,
-            time
+                week_day,
+                time
             }
-        })
-
+        });
+        setTeachers(response.data)
         console.log(response.data)
     }
 
@@ -80,12 +83,12 @@ function TeacherList(){
             </PageHeader>
 
             <main>
-                <TeacherItem />
-                <TeacherItem />
-                <TeacherItem />
+                {teachers.map((teacher: Teacher) => {
+                    return <TeacherItem key={teacher.id} teacher={teacher}/>
+                })}
             </main>
         </div>
     )
 }
 
-export default TeacherList
+export default TeacherList;

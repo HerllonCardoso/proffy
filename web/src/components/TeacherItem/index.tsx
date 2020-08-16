@@ -3,33 +3,45 @@ import whatsappIcon from '../../assets/images/icons/whatsapp.svg'
 
 import './styles.css'
 
-function TeacherItem() {
+export interface Teacher {
+    id: number;
+    avatar: string;
+    bio: string;
+    cost: number;
+    name: string;
+    subject: string;
+    whatsapp: string;
+    
+}
+
+interface TeacherItemProps{
+    teacher: Teacher;
+}
+
+ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
     return(
         <article className="teacher-item">
                     <header>
-                        <img src="https://avatars2.githubusercontent.com/u/60345415?s=460&u=cbe3c6f0841abbd29f06f24c8f86034b4aa851b5&v=4" alt=""/>
+                        <img src={teacher.avatar} alt={teacher.name}/>
                         <div>
-                            <strong>Herllon Cardoso</strong>
-                            <span>IT</span>
+                            <strong>{teacher.name}</strong>
+                            <span>{teacher.subject}</span>
                         </div>
                     </header>
 
                     <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                        <br />  <br />
-                        Unde repellendus voluptates reiciendis aliquam, explicabo numquam. 
-                        Sit laborum quisquam ea officia error perferendis atque, vero modi esse excepturi distinctio, neque eum!
+                        {teacher.bio}
                     </p>
                     
                     <footer>
                         <p>
                             Preço/hora
-                            <strong>R$ 100,0</strong>
+                            <strong>R$ {teacher.cost}</strong>
                         </p>
-                        <button>
+                        <a href={`https://wa.me/${teacher.whatsapp}`}>
                             <img src={whatsappIcon} alt="Whatsapp"/>
                             Entrar em contato
-                        </button>
+                        </a>
                     </footer>
                 </article>
     )
